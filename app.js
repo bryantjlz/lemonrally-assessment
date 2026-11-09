@@ -18,19 +18,37 @@
     stepCounter: document.getElementById('mc-step-counter')
   };
 
+  // ---------- Debug helper ----------
+  function debug(msg, data) {
+    console.log('[Lemon Rally]', msg, data || '');
+  }
+
+  // ---------- Show visible error ----------
+  function showError(msg) {
+    if (els.card) {
+      els.card.innerHTML =
+        '<div style="text-align:center;padding:40px;color:#fff;">' +
+        '<div style="font-size:16px;font-weight:700;margin-bottom:12px;">⚠ ' + msg + '</div>' +
+        '<button class="mc-btn-primary" onclick="window.location.reload()" style="font-size:16px;padding:12px 24px;margin-top:16px;">Refresh Page</button>' +
+        '</div>';
+    }
+    console.error('[Lemon Rally ERROR]', msg);
+  }
+
   // ---------- Load config ----------
   async function loadConfig() {
     try {
+      debug('Fetching config.json...');
       const res = await fetch('config.json', { cache: 'no-store' });
+      debug('config.json status:', res.status);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       config = await res.json();
+      debug('Config loaded:', { questions: config.questions ? config.questions.length : 0, bands: config.bands ? config.bands.length : 0 });
       applyBranding(config);
       render();
     } catch (err) {
-      console.error('Failed to load config.json', err);
-      if (els.card) {
-        els.card.innerHTML = '<p style="color:#fff;text-align:center;padding:40px;">Failed to load assessment. Please refresh and try again.</p>';
-      }
+      debug('Failed to load config.json:', err.message);
+      showError('Failed to load assessment data. Please check your connection and refresh.');
     }
   }
 
@@ -43,7 +61,6 @@
     if (c.darkColor) root.style.setProperty('--club-dark', c.darkColor);
     if (c.lightColor) root.style.setProperty('--club-light', c.lightColor);
 
-    // Update intro copy
     const intro = cfg.intro || {};
     const eyebrow = document.querySelector('#mc-intro .eyebrow');
     const title = document.querySelector('#mc-intro h1.mc-title');
@@ -55,7 +72,6 @@
     if (intro.lead && lead) lead.innerHTML = intro.lead;
     if (intro.cta && cta) cta.textContent = intro.cta;
 
-    // Stats
     const statsContainer = document.querySelector('#mc-intro .stats');
     if (intro.stats && statsContainer) {
       statsContainer.innerHTML = intro.stats.map(s =>
@@ -63,7 +79,6 @@
       ).join('');
     }
 
-    // Features
     const featuresContainer = document.querySelector('#mc-intro .features');
     if (intro.features && featuresContainer) {
       featuresContainer.innerHTML = intro.features.map(f =>
@@ -74,37 +89,42 @@
 
   // ---------- Render ----------
   function render() {
+    debug('render() called, step=' + step, { hasConfig: !!config, total: config ? config.questions.length : 0 });
+
     if (!config) {
-      console.error('render() called before config loaded');
+      debug('render() aborted: config not loaded');
       return;
     }
+
     try {
       const total = config.questions.length;
 
       if (step === 0) {
+        debug('Rendering intro screen');
         if (els.progressWrap) els.progressWrap.style.display = 'none';
         if (els.stepCounter) els.stepCounter.textContent = '';
         if (els.card) els.card.innerHTML = introHTML();
       } else if (step > total) {
+        debug('Rendering results screen');
         if (els.progressWrap) els.progressWrap.style.display = 'block';
         if (els.progressFill) els.progressFill.style.width = '100%';
         if (els.stepCounter) els.stepCounter.textContent = '';
         if (els.card) els.card.innerHTML = resultsHTML();
       } else {
+        debug('Rendering question step ' + step + ' of ' + total);
         if (els.progressWrap) els.progressWrap.style.display = 'block';
         if (els.progressFill) els.progressFill.style.width = Math.round((step / total) * 100) + '%';
         if (els.stepCounter) els.stepCounter.textContent = step + ' / ' + total;
         if (els.card) els.card.innerHTML = qHTML();
+        debug('Question HTML set, card length:', els.card ? els.card.innerHTML.length : 'no card el');
       }
     } catch (err) {
-      console.error('render() error:', err);
-      if (els.card) {
-        els.card.innerHTML = '<p style="color:#fff;text-align:center;padding:40px;">Something went wrong rendering the quiz. Please refresh and try again.</p>';
-      }
+      debug('render() threw error:', err.message);
+      showError('Something went wrong rendering the quiz: ' + err.message);
     }
   }
 
-  // ---------- Intro screen (inside quiz card) ----------
+  // ---------- Intro screen ----------
   function introHTML() {
     const c = config.club || {};
     return `
@@ -124,15 +144,31 @@
 
   // ---------- Question screen ----------
   function qHTML() {
-    if (!config || !config.questions || step < 1 || step > config.questions.length) {
-      console.error('qHTML() invalid state:', { step, hasConfig: !!config });
-      return '<p style="color:#fff;text-align:center;padding:40px;">Invalid question state.</p>';
+    if (!config) {
+      debug('qHTML() aborted: no config');
+      return '<p style="color:#fff;text-align:center;padding:40px;">Config not loaded.</p>';
     }
+    if (!config.questions || !Array.isArray(config.questions) || config.questions.length === 0) {
+      debug('qHTML() aborted: no questions array');
+      return '<p style="color:#fff;text-align:center;padding:40px;">No questions configured.</p>';
+    }
+    if (step < 1 || step > config.questions.length) {
+      debug('qHTML() aborted: step out of range', { step, max: config.questions.length });
+      return '<p style="color:#fff;text-align:center;padding:40px;">Invalid question step.</p>';
+    }
+
     const q = config.questions[step - 1];
-    if (!q || !q.opts) {
-      console.error('qHTML() missing question or opts at step', step, q);
+    if (!q) {
+      debug('qHTML() aborted: question undefined at index', step - 1);
       return '<p style="color:#fff;text-align:center;padding:40px;">Question data missing.</p>';
     }
+    if (!q.opts || !Array.isArray(q.opts) || q.opts.length === 0) {
+      debug('qHTML() aborted: no opts for question', { id: q.id, q: q.q });
+      return '<p style="color:#fff;text-align:center;padding:40px;">Question options missing.</p>';
+    }
+
+    debug('Rendering question:', { id: q.id, cat: q.cat, q: q.q, optsCount: q.opts.length });
+
     const opts = q.opts.map(o =>
       `<button class="mc-opt ${sel === o.s ? 'sel' : ''}" onclick="window.mcSel(${o.s}, this)">
         <div class="mc-radio">${sel === o.s ? '✓' : ''}</div>
@@ -140,6 +176,7 @@
       </button>`
     ).join('');
 
+    const isLast = step === config.questions.length;
     return `
       <span class="mc-tag">${q.cat}</span>
       <div class="mc-title" style="font-size:22px;color:#fff;margin:10px 0 22px;line-height:1.2;">${q.q}</div>
@@ -147,7 +184,7 @@
       <div class="mc-nav">
         <button class="mc-btn-back" onclick="window.mcBack()">← Back</button>
         <button class="mc-btn-primary" id="mc-next" onclick="window.mcNext()" ${sel === null ? 'disabled' : ''} style="font-size:17px;padding:11px 28px;">
-          ${step === config.questions.length ? 'SEE MY RATING' : 'NEXT'}
+          ${isLast ? 'SEE MY RATING' : 'NEXT'}
         </button>
       </div>`;
   }
@@ -156,12 +193,16 @@
   function resultsHTML() {
     if (!config) return '<p style="color:#fff;text-align:center;padding:40px;">No config loaded.</p>';
     const skillQs = config.questions.filter(q => !q.isStyle);
+    if (skillQs.length === 0) {
+      return '<p style="color:#fff;text-align:center;padding:40px;">No skill questions found.</p>';
+    }
     const avg = skillQs.reduce((s, q) => s + (answers[q.id] || 1), 0) / skillQs.length;
     const sc = Math.min(5, Math.max(1, Math.round(avg * 2) / 2));
     const b = band(sc);
     const st = config.styles[answers.sty || 3];
     const cats = config.categories.map(cat => {
       const qs = skillQs.filter(q => q.cat === cat);
+      if (qs.length === 0) return '';
       const vals = qs.map(q => answers[q.id] || 1);
       const s = vals.reduce((a, b) => a + b, 0) / vals.length;
       const pct = ((s - 1) / 4) * 100;
@@ -216,19 +257,22 @@
     return config.bands.find(b => sc >= b.min && sc <= b.max) || config.bands[config.bands.length - 1];
   }
 
-  // ---------- Global actions (called from inline HTML) ----------
+  // ---------- Global actions ----------
   window.mcStart = function () {
+    debug('mcStart() called', { hasConfig: !!config });
     if (!config) {
-      console.error('mcStart() called before config loaded');
+      showError('Assessment data not loaded yet. Please wait and try again.');
       return;
     }
     step = 1;
     sel = null;
+    answers = {};
     render();
     if (els.card) els.card.scrollIntoView({ behavior: 'smooth' });
   };
 
   window.mcSel = function (s, el) {
+    debug('mcSel() called', { s, step });
     sel = s;
     if (!els.card) return;
     document.querySelectorAll('#mc-card .mc-opt').forEach(e => {
@@ -244,18 +288,31 @@
   };
 
   window.mcNext = function () {
+    debug('mcNext() called', { step, sel, hasConfig: !!config });
     if (!config) return;
-    if (sel === null) return;
-    answers[config.questions[step - 1].id] = sel;
+    if (sel === null) {
+      debug('mcNext() aborted: no selection');
+      return;
+    }
+    const currentQ = config.questions[step - 1];
+    if (!currentQ) {
+      debug('mcNext() aborted: no current question at step', step);
+      return;
+    }
+    answers[currentQ.id] = sel;
+    debug('Saved answer:', { id: currentQ.id, value: sel, allAnswers: answers });
+
     step++;
-    sel = (config.questions[step - 1] && answers[config.questions[step - 1].id] !== undefined)
-      ? answers[config.questions[step - 1].id]
-      : null;
+    const nextQ = config.questions[step - 1];
+    sel = (nextQ && answers[nextQ.id] !== undefined) ? answers[nextQ.id] : null;
+    debug('Next step:', { step, sel, nextQId: nextQ ? nextQ.id : null });
+
     render();
     if (els.card) els.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   window.mcBack = function () {
+    debug('mcBack() called', { step });
     if (!config) return;
     if (step <= 1) {
       step = 0;
@@ -270,6 +327,7 @@
   };
 
   window.mcRetake = function () {
+    debug('mcRetake() called');
     step = 0;
     answers = {};
     sel = null;
@@ -277,5 +335,6 @@
   };
 
   // ---------- Boot ----------
+  debug('App initializing...');
   loadConfig();
 })();
