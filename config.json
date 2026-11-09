@@ -17,7 +17,7 @@
       { "num": "100%", "label": "Free · For club members" }
     ],
     "features": [
-      { "icon": "🎯", "title": "Your Skill Rating", "desc": "A 1.0–5.0 rating based on USA Pickleball standards." },
+      { "icon": "🎯", "title": "Your Skill Rating", "desc": "A 2.0–5.0 rating based on USA Pickleball standards." },
       { "icon": "📊", "title": "Category Breakdown", "desc": "See exactly where you're strong and where to improve." },
       { "icon": "⚡", "title": "Playing Style Profile", "desc": "Banger, dinker, or all-around — find your natural game." },
       { "icon": "👥", "title": "Club Matching", "desc": "Get matched with Lemon Rally Club players at your level." }
