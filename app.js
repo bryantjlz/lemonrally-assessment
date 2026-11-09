@@ -204,7 +204,7 @@
       return '<p style="color:var(--club-dark);text-align:center;padding:40px;">No skill questions found.</p>';
     }
     const avg = skillQs.reduce((s, q) => s + (answers[q.id] || 1), 0) / skillQs.length;
-    const sc = Math.min(5, Math.max(2, Math.round(avg * 2) / 2));
+    const sc = Math.min(5, Math.max(2, Math.round(avg * 4) / 4));
     const b = band(sc);
     const st = config.styles[answers.sty || 3];
     const ca = config.clubActivities || {};
