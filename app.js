@@ -22,12 +22,15 @@
   async function loadConfig() {
     try {
       const res = await fetch('config.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       config = await res.json();
       applyBranding(config);
       render();
     } catch (err) {
       console.error('Failed to load config.json', err);
-      els.card.innerHTML = '<p style="color:#fff;text-align:center;padding:40px;">Failed to load assessment. Please try again.</p>';
+      if (els.card) {
+        els.card.innerHTML = '<p style="color:#fff;text-align:center;padding:40px;">Failed to load assessment. Please refresh and try again.</p>';
+      }
     }
   }
 
@@ -71,22 +74,33 @@
 
   // ---------- Render ----------
   function render() {
-    const total = config.questions.length;
+    if (!config) {
+      console.error('render() called before config loaded');
+      return;
+    }
+    try {
+      const total = config.questions.length;
 
-    if (step === 0) {
-      els.progressWrap.style.display = 'none';
-      els.stepCounter.textContent = '';
-      els.card.innerHTML = introHTML();
-    } else if (step > total) {
-      els.progressWrap.style.display = 'block';
-      els.progressFill.style.width = '100%';
-      els.stepCounter.textContent = '';
-      els.card.innerHTML = resultsHTML();
-    } else {
-      els.progressWrap.style.display = 'block';
-      els.progressFill.style.width = Math.round((step / total) * 100) + '%';
-      els.stepCounter.textContent = step + ' / ' + total;
-      els.card.innerHTML = qHTML();
+      if (step === 0) {
+        if (els.progressWrap) els.progressWrap.style.display = 'none';
+        if (els.stepCounter) els.stepCounter.textContent = '';
+        if (els.card) els.card.innerHTML = introHTML();
+      } else if (step > total) {
+        if (els.progressWrap) els.progressWrap.style.display = 'block';
+        if (els.progressFill) els.progressFill.style.width = '100%';
+        if (els.stepCounter) els.stepCounter.textContent = '';
+        if (els.card) els.card.innerHTML = resultsHTML();
+      } else {
+        if (els.progressWrap) els.progressWrap.style.display = 'block';
+        if (els.progressFill) els.progressFill.style.width = Math.round((step / total) * 100) + '%';
+        if (els.stepCounter) els.stepCounter.textContent = step + ' / ' + total;
+        if (els.card) els.card.innerHTML = qHTML();
+      }
+    } catch (err) {
+      console.error('render() error:', err);
+      if (els.card) {
+        els.card.innerHTML = '<p style="color:#fff;text-align:center;padding:40px;">Something went wrong rendering the quiz. Please refresh and try again.</p>';
+      }
     }
   }
 
@@ -104,13 +118,21 @@
           <span class="mc-tag">Style Profile</span>
           <span class="mc-tag">Find Club Matches</span>
         </div>
-        <button class="mc-btn-primary" onclick="mcStart()" style="font-size:20px;padding:14px 44px;">LET'S GO</button>
+        <button class="mc-btn-primary" onclick="window.mcStart()" style="font-size:20px;padding:14px 44px;">LET'S GO</button>
       </div>`;
   }
 
   // ---------- Question screen ----------
   function qHTML() {
+    if (!config || !config.questions || step < 1 || step > config.questions.length) {
+      console.error('qHTML() invalid state:', { step, hasConfig: !!config });
+      return '<p style="color:#fff;text-align:center;padding:40px;">Invalid question state.</p>';
+    }
     const q = config.questions[step - 1];
+    if (!q || !q.opts) {
+      console.error('qHTML() missing question or opts at step', step, q);
+      return '<p style="color:#fff;text-align:center;padding:40px;">Question data missing.</p>';
+    }
     const opts = q.opts.map(o =>
       `<button class="mc-opt ${sel === o.s ? 'sel' : ''}" onclick="window.mcSel(${o.s}, this)">
         <div class="mc-radio">${sel === o.s ? '✓' : ''}</div>
@@ -125,13 +147,14 @@
       <div class="mc-nav">
         <button class="mc-btn-back" onclick="window.mcBack()">← Back</button>
         <button class="mc-btn-primary" id="mc-next" onclick="window.mcNext()" ${sel === null ? 'disabled' : ''} style="font-size:17px;padding:11px 28px;">
-          ${step === total ? 'SEE MY RATING' : 'NEXT'}
+          ${step === config.questions.length ? 'SEE MY RATING' : 'NEXT'}
         </button>
       </div>`;
   }
 
   // ---------- Results screen ----------
   function resultsHTML() {
+    if (!config) return '<p style="color:#fff;text-align:center;padding:40px;">No config loaded.</p>';
     const skillQs = config.questions.filter(q => !q.isStyle);
     const avg = skillQs.reduce((s, q) => s + (answers[q.id] || 1), 0) / skillQs.length;
     const sc = Math.min(5, Math.max(1, Math.round(avg * 2) / 2));
@@ -189,19 +212,25 @@
 
   // ---------- Helpers ----------
   function band(sc) {
+    if (!config || !config.bands) return { label: 'Unknown', desc: '' };
     return config.bands.find(b => sc >= b.min && sc <= b.max) || config.bands[config.bands.length - 1];
   }
 
   // ---------- Global actions (called from inline HTML) ----------
   window.mcStart = function () {
+    if (!config) {
+      console.error('mcStart() called before config loaded');
+      return;
+    }
     step = 1;
     sel = null;
     render();
-    els.card.scrollIntoView({ behavior: 'smooth' });
+    if (els.card) els.card.scrollIntoView({ behavior: 'smooth' });
   };
 
   window.mcSel = function (s, el) {
     sel = s;
+    if (!els.card) return;
     document.querySelectorAll('#mc-card .mc-opt').forEach(e => {
       e.classList.remove('sel');
       const radio = e.querySelector('.mc-radio');
@@ -215,15 +244,19 @@
   };
 
   window.mcNext = function () {
+    if (!config) return;
     if (sel === null) return;
     answers[config.questions[step - 1].id] = sel;
     step++;
-    sel = (config.questions[step - 1] && answers[config.questions[step - 1].id]) !== undefined ? answers[config.questions[step - 1].id] : null;
+    sel = (config.questions[step - 1] && answers[config.questions[step - 1].id] !== undefined)
+      ? answers[config.questions[step - 1].id]
+      : null;
     render();
-    els.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (els.card) els.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   window.mcBack = function () {
+    if (!config) return;
     if (step <= 1) {
       step = 0;
       answers = {};
