@@ -1,0 +1,128 @@
+{
+  "club": {
+    "name": "Lemon Rally Club",
+    "tagline": "Pickleball skill assessment for our club members",
+    "primaryColor": "#FFD60A",
+    "accentColor": "#6ABF4A",
+    "darkColor": "#1A1A1A",
+    "lightColor": "#FFF9E6"
+  },
+  "intro": {
+    "eyebrow": "Lemon Rally Club Skill Assessment",
+    "title": "What's Your <span>Pickleball Level?</span>",
+    "lead": "Not sure if you're a <strong>2.5 or a 3.5?</strong> Whether you're brand new to the game or a seasoned rec player at Lemon Rally Club, knowing your skill level means better matches, better games, and faster improvement. Take our free club assessment and find out in under 3 minutes.",
+    "stats": [
+      { "num": "3", "label": "Minutes to complete" },
+      { "num": "10", "label": "Questions" },
+      { "num": "100%", "label": "Free · For club members" }
+    ],
+    "features": [
+      { "icon": "🎯", "title": "Your Skill Rating", "desc": "A 1.0–5.0 rating based on USA Pickleball standards." },
+      { "icon": "📊", "title": "Category Breakdown", "desc": "See exactly where you're strong and where to improve." },
+      { "icon": "⚡", "title": "Playing Style Profile", "desc": "Banger, dinker, or all-around — find your natural game." },
+      { "icon": "👥", "title": "Club Matching", "desc": "Get matched with Lemon Rally Club players at your level." }
+    ],
+    "faq": [
+      { "q": "How accurate is this pickleball skill assessment?", "a": "Based on USA Pickleball's official skill rating criteria — the same starting point recommended before getting an official DUPR rating." },
+      { "q": "What's the difference between a 3.0 and a 3.5?", "a": "At 3.0 you're consistent with basic shots and understand positioning. At 3.5 you're developing third-shot drops, sustaining dink rallies, and reading your opponent." },
+      { "q": "Do I need to create an account to take the quiz?", "a": "No — the quiz is completely free for Lemon Rally Club members. No sign-up required." },
+      { "q": "What is pickleball skill assessment used for?", "a": "It helps you find the right open play sessions, join the right tournament brackets, and get matched with players who challenge you without overwhelming you." }
+    ],
+    "cta": "TAKE THE FREE ASSESSMENT ↓"
+  },
+  "questions": [
+    { "id": "exp", "cat": "Foundation", "q": "How long have you been playing pickleball?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Just started — still learning the rules and basics" },
+      { "s": 2, "t": "A few months — I can keep score and get the ball in play" },
+      { "s": 3, "t": "1–2 years — I play regularly and know my way around the court" },
+      { "s": 4, "t": "3–5 years — I play competitive rec or open play consistently" },
+      { "s": 5, "t": "5+ years — I play in leagues, tournaments, or at a high level" }
+    ]},
+    { "id": "srv", "cat": "Groundstrokes", "q": "How would you describe your serve?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Just trying to get it in the box" },
+      { "s": 2, "t": "Getting it in consistently, not much else" },
+      { "s": 3, "t": "Consistent with some depth control" },
+      { "s": 4, "t": "Placing with varying depth, speed, and location" },
+      { "s": 5, "t": "High-level variety — pace, spin, placement as weapons" }
+    ]},
+    { "id": "fh", "cat": "Groundstrokes", "q": "Forehand groundstroke / return of serve?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Just trying to clear the net" },
+      { "s": 2, "t": "Basic success with minimal movement" },
+      { "s": 3, "t": "Medium pace, limited direction and depth" },
+      { "s": 4, "t": "Consistent with varied direction, pace, and depth" },
+      { "s": 5, "t": "Excellent placement with spin as a tool" }
+    ]},
+    { "id": "rst", "cat": "Groundstrokes", "q": "Can you reset the point when a fast ball is hit at you?", "isStyle": false, "opts": [
+      { "s": 1, "t": "I just try to block it — usually out or in the net" },
+      { "s": 2, "t": "Sometimes get it back, not with much control" },
+      { "s": 3, "t": "I can reset occasionally but it's inconsistent" },
+      { "s": 4, "t": "I can reliably reset hard shots softly into the kitchen" },
+      { "s": 5, "t": "My reset is a weapon — I turn defense into offense" }
+    ]},
+    { "id": "dnk", "cat": "Kitchen Game", "q": "How's your dink game at the kitchen?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Barely use it — not part of my game yet" },
+      { "s": 2, "t": "Starting to understand it, short rallies" },
+      { "s": 3, "t": "Developing consistency and basic patience" },
+      { "s": 4, "t": "Consistent, offensive dinking — attacking high balls" },
+      { "s": 5, "t": "Strategic variability — moving opponents, creating attacks" }
+    ]},
+    { "id": "vlly", "cat": "Kitchen Game", "q": "How do you handle volleys (balls hit out of the air)?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Most go in the net or out" },
+      { "s": 2, "t": "Basic punch volley, limited control" },
+      { "s": 3, "t": "Can volley medium-paced shots with some direction" },
+      { "s": 4, "t": "Consistent — blocks, topspin, overheads" },
+      { "s": 5, "t": "Resetting hard shots, quick counterattacks, excellent placement" }
+    ]},
+    { "id": "thrd", "cat": "Kitchen Game", "q": "What's your 3rd shot strategy (after serving)?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Don't know the strategy yet" },
+      { "s": 2, "t": "Hitting medium pace, not really dropping" },
+      { "s": 3, "t": "Attempting drops mixed with drives — inconsistent" },
+      { "s": 4, "t": "Somewhat consistent drops and drives to advance" },
+      { "s": 5, "t": "Consistent drops as a strategic weapon" }
+    ]},
+    { "id": "mv", "cat": "Movement & Strategy", "q": "How would you describe your court movement?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Get to the ball and hit it — survival mode" },
+      { "s": 2, "t": "Developing basic side-to-side movement" },
+      { "s": 3, "t": "Moving to the kitchen, anticipating shots" },
+      { "s": 4, "t": "Quick, efficient movement with solid teamwork" },
+      { "s": 5, "t": "Poaches, Ernes, around-the-post — intentional positioning" }
+    ]},
+    { "id": "str", "cat": "Movement & Strategy", "q": "How do you approach strategy during a match?", "isStyle": false, "opts": [
+      { "s": 1, "t": "Keep it in play — that's the goal" },
+      { "s": 2, "t": "Hitting away from opponents, building awareness" },
+      { "s": 3, "t": "Keeping opponents back, choosing hard vs. soft game" },
+      { "s": 4, "t": "Identifying and exploiting opponent weaknesses" },
+      { "s": 5, "t": "Controlling net play, minimizing errors, adapting dynamically" }
+    ]},
+    { "id": "sty", "cat": "Playing Style", "q": "Which best describes how you naturally play?", "isStyle": true, "opts": [
+      { "s": 1, "l": "Power Banger", "t": "I drive everything hard" },
+      { "s": 2, "l": "Aggressive Driver", "t": "I prefer drives and attacking when possible" },
+      { "s": 3, "l": "All-Around", "t": "I mix power and finesse depending on the situation" },
+      { "s": 4, "l": "Soft Game", "t": "I'd rather reset and dink than get into a firefight" },
+      { "s": 5, "l": "Pure Dinker", "t": "Patience is my weapon — I live at the kitchen line" }
+    ]}
+  ],
+  "bands": [
+    { "min": 1, "max": 1.9, "label": "1.0 – Beginner", "desc": "Just getting started. Focus on keeping it in play and learning the rules." },
+    { "min": 2, "max": 2.4, "label": "2.0 – Novice", "desc": "Building fundamentals. Working on consistency and court position." },
+    { "min": 2.5, "max": 2.9, "label": "2.5 – Developing", "desc": "Rallying with intention. Starting to understand placement and the soft game." },
+    { "min": 3, "max": 3.4, "label": "3.0 – Intermediate", "desc": "Solid all-around player. Consistent groundstrokes, learning the kitchen game." },
+    { "min": 3.5, "max": 3.9, "label": "3.5 – Strong Intermediate", "desc": "Reliable technique with growing strategy. Third shot drops becoming a tool." },
+    { "min": 4, "max": 4.4, "label": "4.0 – Advanced", "desc": "Consistent, intentional play. Strong at net, can exploit opponent weaknesses." },
+    { "min": 4.5, "max": 5, "label": "4.5+ – Elite", "desc": "Tournament-level. Full command of pace, spin, placement, and strategy." }
+  ],
+  "styles": {
+    "1": { "label": "Power Banger", "emoji": "💥", "desc": "You win with pace. Adding a soft game will make you unpredictable." },
+    "2": { "label": "Aggressive Driver", "emoji": "⚡", "desc": "You like to attack. Mixing in resets will take your game to the next level." },
+    "3": { "label": "All-Around Player", "emoji": "🎯", "desc": "Versatile and adaptable — the hardest style to play against." },
+    "4": { "label": "Soft Game", "emoji": "🧘", "desc": "Patient and precise. Sharpening your drive will complete your arsenal." },
+    "5": { "label": "Pure Dinker", "emoji": "🍃", "desc": "Kitchen is your home. An aggressive third shot drop will open up more points." }
+  },
+  "categories": ["Foundation", "Groundstrokes", "Kitchen Game", "Movement & Strategy"],
+  "results": {
+    "ctaSubtext": "🏓 Your rating is saved — don't lose it",
+    "findPlayers": "FIND CLUB MEMBERS AT YOUR <span>{score} LEVEL</span>",
+    "findPlayersDesc": "Connect with Lemon Rally Club members at your skill level and find open play sessions near you.",
+    "retake": "Retake Assessment"
+  }
+}

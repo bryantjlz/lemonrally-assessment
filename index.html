@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#FFD60A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Lemon Rally Assessment" />
+  <meta name="description" content="Lemon Rally Club pickleball skill assessment. Find your 1.0–5.0 rating, playing style, and get matched with club members." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <title>Lemon Rally Club — Pickleball Skill Assessment</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Intro Section -->
+  <div id="mc-intro" class="section">
+    <div class="inner">
+      <span class="eyebrow" data-config="intro.eyebrow">Lemon Rally Club Skill Assessment</span>
+      <h1 class="mc-title" data-config-html="intro.title">What's Your <span>Pickleball Level?</span></h1>
+      <p class="lead" data-config-html="intro.lead">Not sure if you're a <strong>2.5 or a 3.5?</strong> Find your level.</p>
+      <div class="stats" data-config="intro.stats">
+        <div class="stat"><span class="stat-num">3</span><div class="stat-label">Minutes to complete</div></div>
+        <div class="stat"><span class="stat-num">10</span><div class="stat-label">Questions</div></div>
+        <div class="stat"><span class="stat-num">100%</span><div class="stat-label">Free · For club members</div></div>
+      </div>
+      <div class="mc-divider"></div>
+      <h2 class="mc-title section-subtitle">What You'll Get</h2>
+      <div class="features" data-config="intro.features">
+        <div class="feature">
+          <span class="feature-icon">🎯</span>
+          <div class="feature-title">Your Skill Rating</div>
+          <p class="feature-desc">A 1.0–5.0 rating based on USA Pickleball standards.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">📊</span>
+          <div class="feature-title">Category Breakdown</div>
+          <p class="feature-desc">See exactly where you're strong and where to improve.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">⚡</span>
+          <div class="feature-title">Playing Style Profile</div>
+          <p class="feature-desc">Banger, dinker, or all-around — find your natural game.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon">👥</span>
+          <div class="feature-title">Club Matching</div>
+          <p class="feature-desc">Get matched with Lemon Rally Club players at your level.</p>
+        </div>
+      </div>
+      <div class="mc-divider"></div>
+      <div class="faq">
+        <h2 class="mc-title section-subtitle">Common Questions</h2>
+        <div class="faq-item">
+          <div class="faq-q">How accurate is this pickleball skill assessment?</div>
+          <p class="faq-a">Based on USA Pickleball's official skill rating criteria — the same starting point recommended before getting an official DUPR rating.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What's the difference between a 3.0 and a 3.5?</div>
+          <p class="faq-a">At 3.0 you're consistent with basic shots and understand positioning. At 3.5 you're developing third-shot drops, sustaining dink rallies, and reading your opponent.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need to create an account to take the quiz?</div>
+          <p class="faq-a">No — the quiz is completely free for Lemon Rally Club members. No sign-up required.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is pickleball skill assessment used for?</div>
+          <p class="faq-a">It helps you find the right open play sessions, join the right tournament brackets, and get matched with players who challenge you without overwhelming you.</p>
+        </div>
+      </div>
+      <p class="ready-hint">Ready? Scroll down to start ↓</p>
+      <a href="#mc-quiz-wrap" class="cta-down" id="startCta">TAKE THE FREE ASSESSMENT ↓</a>
+    </div>
+  </div>
+
+  <!-- Quiz Section -->
+  <div id="mc-quiz-wrap" class="section">
+    <div id="mc-quiz-inner">
+      <div id="mc-step-counter"></div>
+      <div id="mc-progress-wrap">
+        <div id="mc-progress-bar"><div id="mc-progress-fill"></div></div>
+      </div>
+      <div id="mc-card"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
