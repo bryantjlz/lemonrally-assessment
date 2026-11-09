@@ -153,6 +153,17 @@
         "suitable": ["A step-up in pace and challenge from beginner games.", "Opportunities to practise placement, shot selection and teamwork.", "A supportive atmosphere where mistakes are part of learning.", "Social games with a growth mindset"],
         "minScore": 2.5,
         "maxScore": 3.5
+      },
+      {
+        "name": "LEMON ZEST!",
+        "tag": "Intermediate-Advanced",
+        "range": "3.75-5.0",
+        "emoji": "🍊",
+        "description": "Competitive play for advanced club members!",
+        "details": ["Fast-paced competitive games.", "Advanced shot selection and strategy.", "High-intensity rallies and tournament preparation."],
+        "suitable": ["Strong intermediate to elite players.", "Competitive match play experience.", "Players ready for tournament-level games."],
+        "minScore": 3.75,
+        "maxScore": 5.0
       }
     ],
     "safety": [
