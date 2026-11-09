@@ -189,6 +189,7 @@
     }
 
     return `
+      <img src="icons/source-logo.png" alt="Lemon Rally Club logo" class="club-logo" />
       <span class="mc-tag">${q.cat}</span>
       <div class="mc-title" style="font-size:22px;color:#fff;margin:10px 0 22px;line-height:1.2;">${q.q}</div>
       <div>${opts}</div>
@@ -197,25 +198,33 @@
 
   // ---------- Results screen ----------
   function resultsHTML() {
-    if (!config) return '<p style="color:#fff;text-align:center;padding:40px;">No config loaded.</p>';
+    if (!config) return '<p style="color:var(--club-dark);text-align:center;padding:40px;">No config loaded.</p>';
     const skillQs = config.questions.filter(q => !q.isStyle);
     if (skillQs.length === 0) {
-      return '<p style="color:#fff;text-align:center;padding:40px;">No skill questions found.</p>';
+      return '<p style="color:var(--club-dark);text-align:center;padding:40px;">No skill questions found.</p>';
     }
     const avg = skillQs.reduce((s, q) => s + (answers[q.id] || 1), 0) / skillQs.length;
-    const sc = Math.min(5, Math.max(1, Math.round(avg * 2) / 2));
+    const sc = Math.min(5, Math.max(2, Math.round(avg * 2) / 2));
     const b = band(sc);
     const st = config.styles[answers.sty || 3];
+    const ca = config.clubActivities || {};
+
+    // Find recommended session based on score
+    let recommendedSession = null;
+    if (ca.sessions) {
+      recommendedSession = ca.sessions.find(s => sc >= s.minScore && sc <= s.maxScore);
+    }
+
     const cats = config.categories.map(cat => {
       const qs = skillQs.filter(q => q.cat === cat);
       if (qs.length === 0) return '';
       const vals = qs.map(q => answers[q.id] || 1);
       const s = vals.reduce((a, b) => a + b, 0) / vals.length;
-      const pct = ((s - 1) / 4) * 100;
+      const pct = ((s - 2) / 3) * 100;
       return `
         <div style="margin-bottom:14px;">
           <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-            <span style="font-size:14px;color:#fff;">${cat}</span>
+            <span style="font-size:14px;color:var(--club-dark);">${cat}</span>
             <span style="font-size:13px;color:#FDCE00;font-weight:700;">${s.toFixed(1)}</span>
           </div>
           <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:${pct}%"></div></div>
@@ -223,36 +232,94 @@
     }).join('');
 
     const r = config.results || {};
-    const findPlayersText = (r.findPlayers || 'FIND PLAYERS AT YOUR {score} LEVEL').replace('{score}', sc.toFixed(1));
+    const findPlayersText = (r.findPlayers || 'FIND CLUB MEMBERS AT YOUR <span>{score} LEVEL</span>').replace('{score}', sc.toFixed(1));
+
+    // Build session recommendations HTML
+    let sessionsHTML = '';
+    if (ca.sessions && ca.sessions.length > 0) {
+      sessionsHTML = `
+        <div class="mc-divider-w"></div>
+        <div style="margin-bottom:24px;">
+          <div class="mc-title" style="font-size:18px;color:var(--club-dark);margin-bottom:16px;">Recommended Club Sessions</div>
+          ${ca.sessions.map(s => {
+            const isRecommended = recommendedSession && s.name === recommendedSession.name;
+            return `
+              <div style="margin-bottom:14px; padding:16px; background: ${isRecommended ? 'rgba(253, 207, 0, 0.15)' : 'rgba(0, 15, 67, 0.05)'}; border: 2px solid ${isRecommended ? '#FDCE00' : 'rgba(0, 15, 67, 0.2)'}; border-radius: 14px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                  <div style="font-size:20px; margin-right:8px;">${s.emoji}</div>
+                  <div style="flex:1;">
+                    <div class="mc-title" style="font-size:20px;color:var(--club-dark);margin:0;">${s.name}</div>
+                    <div style="font-size:13px;color:var(--club-accent);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">${s.tag}</div>
+                  </div>
+                  <div style="font-size:13px;color:var(--club-dark);font-weight:700;">${s.range}</div>
+                </div>
+                <p style="font-size:14px;color:var(--club-dark);margin:0 0 10px;line-height:1.5;">${s.description}</p>
+                <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--club-dark);line-height:1.6;">
+                  ${s.details.map(d => `<li style="margin-bottom:4px;">• ${d}</li>`).join('')}
+                </ul>
+                ${isRecommended ? '<div style="margin-top:10px;font-size:12px;font-weight:700;color:#FDCE00;">⭐ Recommended for your level!</div>' : ''}
+              </div>`;
+          }).join('')}
+        </div>`;
+    }
+
+    // Build Reclub HTML
+    let reclubHTML = '';
+    if (ca.reclub) {
+      reclubHTML = `
+        <div class="mc-divider-w"></div>
+        <div style="margin-bottom:24px; padding:20px; background:rgba(0, 15, 67, 0.05); border:2px solid var(--club-accent); border-radius:16px; text-align:center;">
+          <div class="mc-title" style="font-size:16px;color:var(--club-accent);margin-bottom:8px;">${ca.reclub.text}</div>
+          <div style="display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--club-accent);border-radius:999px;padding:8px 16px;font-size:13px;color:var(--club-accent);font-weight:700;">
+            <span>🆔</span><span style="letter-spacing:0.1em;">${ca.reclub.code}</span>
+          </div>
+          <a href="${ca.reclub.url}" style="display:inline-block;margin-top:10px;padding:12px 24px;background:var(--club-accent);color:#fff;border-radius:10px;text-decoration:none;font-weight:700;font-family:var(--font-display);">Join on Reclub</a>
+        </div>`;
+    }
+
+    // Build safety HTML
+    let safetyHTML = '';
+    if (ca.safety && ca.safety.length > 0) {
+      safetyHTML = `
+        <div class="mc-divider-w"></div>
+        <div style="margin-bottom:24px; padding:16px; background:rgba(255, 255, 255, 0.6); border-left:4px solid #FDCE00; border-radius:8px; font-size:11px;color:var(--club-dark);line-height:1.6;">
+          <div style="font-size:12px;font-weight:700;color:var(--club-accent);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em;">Important Safety Notice</div>
+          <ul style="margin:0;padding-left:16px;">
+            ${ca.safety.map(s => `<li style="margin-bottom:4px;">➡️ ${s}</li>`).join('')}
+          </ul>
+        </div>`;
+    }
 
     return `
       <div style="text-align:center;margin-bottom:24px;">
-        <p style="color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;">Your Skill Rating</p>
+        <p style="color:var(--club-dark);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;">Your Skill Rating</p>
         <div class="mc-score-circle"><span class="mc-score-num">${sc.toFixed(1)}</span></div>
-        <div class="mc-title" style="font-size:32px;color:#fff;margin-bottom:10px;">${b.label}</div>
-        <p style="color:rgba(255,255,255,0.85);font-size:15px;line-height:1.6;">${b.desc}</p>
+        <div class="mc-title" style="font-size:32px;color:var(--club-dark);margin-bottom:10px;">${b.label}</div>
+        <p style="color:var(--club-dark);font-size:15px;line-height:1.6;">${b.desc}</p>
       </div>
       <div class="mc-divider-w"></div>
       <div style="margin-bottom:24px;">
-        <div class="mc-title" style="font-size:18px;color:#fff;margin-bottom:16px;">Breakdown by Category</div>
+        <div class="mc-title" style="font-size:18px;color:var(--club-dark);margin-bottom:16px;">Breakdown by Category</div>
         ${cats}
       </div>
       <div class="mc-divider-w"></div>
       <div style="margin-bottom:24px;">
-        <div class="mc-title" style="font-size:18px;color:#fff;margin-bottom:14px;">Your Playing Style</div>
+        <div class="mc-title" style="font-size:18px;color:var(--club-dark);margin-bottom:14px;">Your Playing Style</div>
         <div class="mc-style-card">
           <span style="font-size:30px;">${st.emoji}</span>
           <div>
             <div class="mc-title" style="font-size:20px;color:#FDCE00;margin-bottom:6px;">${st.label}</div>
-            <p style="color:rgba(255,255,255,0.85);font-size:14px;line-height:1.5;margin:0;">${st.desc}</p>
+            <p style="color:var(--club-dark);font-size:14px;line-height:1.5;margin:0;">${st.desc}</p>
           </div>
         </div>
       </div>
-      <div class="mc-divider-w"></div>
+      ${sessionsHTML}
+      ${reclubHTML}
+      ${safetyHTML}
       <div class="mc-cta-box">
         <div class="saved-pill">${r.ctaSubtext || '🏓 Your rating is saved — don\'t lose it'}</div>
-        <div class="mc-title" style="font-size:26px;color:#fff;margin-bottom:10px;line-height:1.1;">${findPlayersText}</div>
-        <p style="color:rgba(255,255,255,0.8);font-size:14px;margin-bottom:18px;line-height:1.6;">${r.findPlayersDesc || 'Connect with club members at your skill level.'}</p>
+        <div class="mc-title" style="font-size:26px;color:var(--club-dark);margin-bottom:10px;line-height:1.1;">${findPlayersText}</div>
+        <p style="color:var(--club-dark);font-size:14px;margin-bottom:18px;line-height:1.6;">${r.findPlayersDesc || 'Connect with club members at your skill level.'}</p>
         <button class="mc-btn-primary" onclick="window.mcRetake()" style="font-size:18px;padding:12px 32px;">${r.retake || 'Retake Assessment'}</button>
       </div>`;
   }

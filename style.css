@@ -78,6 +78,133 @@ html, body {
   border-radius: 8px;
 }
 
+/* ---------- Club Activities (Landing Page) ---------- */
+.club-activities {
+  margin: 0 0 40px;
+}
+
+.club-activities .section-subtitle {
+  margin-bottom: 20px;
+}
+
+.session-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.session-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: var(--club-light);
+  border: 1px solid rgba(0, 15, 67, 0.15);
+  border-left: 4px solid var(--club-accent);
+}
+
+.session-card.session-recommended {
+  background: rgba(253, 207, 0, 0.15);
+  border-left: 4px solid #FDCE00;
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.session-emoji {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.session-header > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.session-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--club-dark);
+  font-weight: 700;
+  margin: 0;
+}
+
+.session-tag {
+  font-size: 12px;
+  color: var(--club-accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+.session-range {
+  font-size: 13px;
+  color: var(--club-dark);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.session-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.reclub-box {
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(0, 15, 67, 0.05);
+  border: 2px solid var(--club-accent);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.reclub-text {
+  font-size: 16px;
+  color: var(--club-accent);
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.reclub-code {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--club-accent);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: var(--club-accent);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.reclub-link {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--club-accent);
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-family: var(--font-display);
+  transition: var(--transition);
+}
+
+.reclub-link:hover {
+  background: #002a80;
+  transform: translateY(-1px);
+}
+
 #mc-intro h1.mc-title {
   font-family: var(--font-display);
   font-size: 56px;
@@ -238,8 +365,16 @@ html, body {
 
 /* ---------- Quiz ---------- */
 #mc-quiz-wrap {
-  background: var(--bg-quiz);
+  background: linear-gradient(135deg, #FFF4CC 0%, #FDCE00 50%, #FFF4CC 100%);
+  background-size: 200% 200%;
+  animation: lemonMove 8s ease infinite;
   padding: 32px 16px;
+}
+
+@keyframes lemonMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 #mc-quiz-inner {
@@ -275,12 +410,14 @@ html, body {
 }
 
 #mc-card {
-  background: var(--club-primary);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 3px solid var(--club-primary);
+  border-radius: 24px;
   padding: 32px 24px;
   box-shadow: var(--shadow);
   min-height: 420px;
   color: var(--club-dark);
+  backdrop-filter: blur(10px);
 }
 
 /* General tag badge (used in intro section) */
@@ -316,8 +453,8 @@ html, body {
 }
 
 #mc-card .mc-opt:hover {
-  background: rgba(255, 255, 255, 1);
-  border-color: var(--club-accent);
+  background: #E6F3FF;
+  border-color: #0066CC;
   transform: translateX(3px);
 }
 
@@ -477,12 +614,20 @@ html, body {
 }
 
 .mc-btn-back {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--club-accent);
+  color: var(--club-accent);
   cursor: pointer;
   font-size: 14px;
   font-family: var(--font-body);
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.mc-btn-back:hover {
+  background: var(--club-accent);
+  color: #fff;
 }
 
 .mc-divider-w {

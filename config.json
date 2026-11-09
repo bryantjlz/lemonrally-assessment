@@ -103,7 +103,6 @@
     ]}
   ],
   "bands": [
-    { "min": 1, "max": 1.9, "label": "1.0 – Beginner", "desc": "Just getting started. Focus on keeping it in play and learning the rules." },
     { "min": 2, "max": 2.4, "label": "2.0 – Novice", "desc": "Building fundamentals. Working on consistency and court position." },
     { "min": 2.5, "max": 2.9, "label": "2.5 – Developing", "desc": "Rallying with intention. Starting to understand placement and the soft game." },
     { "min": 3, "max": 3.4, "label": "3.0 – Intermediate", "desc": "Solid all-around player. Consistent groundstrokes, learning the kitchen game." },
@@ -124,5 +123,45 @@
     "findPlayers": "FIND CLUB MEMBERS AT YOUR <span>{score} LEVEL</span>",
     "findPlayersDesc": "Connect with Lemon Rally Club members at your skill level and find open play sessions near you.",
     "retake": "Retake Assessment"
+  },
+  "clubActivities": {
+    "reclub": {
+      "code": "V42LO",
+      "url": "https://reclub.co/clubs/@lemon-rally-club",
+      "text": "Lemon Rally Club is using Reclub to organize activities!"
+    },
+    "sessions": [
+      {
+        "name": "LEMON LIFT!",
+        "tag": "Beginner friendly",
+        "range": "Up to 3.0",
+        "emoji": "✨",
+        "description": "Confidence Building Social Game",
+        "details": ["Less Pressure.", "Better Rallies.", "More Confidence."],
+        "suitable": ["Building consistency", "Practicing what you've learned (without judgment)", "Having fun while leveling up"],
+        "goodFor": ["Looking to improve serves and returns", "Fairly familiar with game rules", "Working on getting to the kitchen more often", "Working on sustaining longer rallies", "Working to improve footwork and shots"],
+        "minScore": 0,
+        "maxScore": 3.0
+      },
+      {
+        "name": "LEMON STEP UP!",
+        "tag": "Advanced Beginner-Low Intermediate",
+        "range": "2.75-3.25",
+        "emoji": "🍋",
+        "description": "Players up to 3.5 welcome!",
+        "details": ["Getting serves and returns in consistently.", "Sustaining rallies beyond the first few shots.", "Moving towards the kitchen and developing your soft game."],
+        "suitable": ["A step-up in pace and challenge from beginner games.", "Opportunities to practise placement, shot selection and teamwork.", "A supportive atmosphere where mistakes are part of learning.", "Social games with a growth mindset"],
+        "minScore": 2.5,
+        "maxScore": 3.5
+      }
+    ],
+    "safety": [
+      "Do proper warm-up and stretching before and after the session to minimise injuries",
+      "ALWAYS listen to your body and stay hydrated throughout the session",
+      "Pickleball is a physical activity that has inherent risks, including but not limited to falls, collisions and other injuries",
+      "Ensure you have proper attire, footwear and protective gear as necessary, we recommend wearing protective eyewear",
+      "We will not be held responsible or liable for any injuries, accidents, or damages sustained before, during or after the session",
+      "By joining, you confirm that you are physically fit to participate and we will not be held accountable &amp; liable for any health-related incidents that may arise"
+    ]
   }
 }
