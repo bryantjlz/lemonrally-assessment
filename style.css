@@ -107,6 +107,12 @@ html, body {
   border-left: 4px solid #FDCE00;
 }
 
+.session-card.session-upcoming {
+  background: rgba(0, 15, 67, 0.05);
+  border-left: 4px solid #999;
+  opacity: 0.85;
+}
+
 .session-header {
   display: flex;
   justify-content: space-between;

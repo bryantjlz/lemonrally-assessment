@@ -156,10 +156,11 @@
       },
       {
         "name": "LEMON ZEST!",
-        "tag": "Intermediate-Advanced",
+        "tag": "Intermediate-Advanced · Coming Soon",
         "range": "3.75-5.0",
         "emoji": "🍊",
-        "description": "Competitive play for advanced club members!",
+        "description": "Competitive play for advanced club members! Coming soon — stay tuned!",
+        "status": "upcoming",
         "details": ["Fast-paced competitive games.", "Advanced shot selection and strategy.", "High-intensity rallies and tournament preparation."],
         "suitable": ["Strong intermediate to elite players.", "Competitive match play experience.", "Players ready for tournament-level games."],
         "minScore": 3.75,

@@ -252,7 +252,7 @@
             const borderColor = showBoth && isMatching ? '#FDCE00' : (isRecommended ? '#FDCE00' : 'rgba(0, 15, 67, 0.2)');
             const badge = showBoth && isMatching && !isRecommended
               ? '<div style="font-size:11px;font-weight:700;color:#FDCE00;text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;">Also suitable for your level</div>'
-              : (isRecommended ? '<div style="font-size:12px;font-weight:700;color:#FDCE00;margin-top:10px;">⭐ Recommended for your level!</div>' : '');
+              : (isRecommended ? '<div style="font-size:12px;font-weight:700;color:#FDCE00;margin-top:10px;">⭐ Recommended for your level!</div>' : (s.status === 'upcoming' ? '<div style="font-size:12px;font-weight:700;color:#FDCE00;margin-top:10px;">⏰ Coming Soon — Not Started Yet</div>' : ''));
             return `
               <div style="margin-bottom:14px; padding:16px; background:${highlight}; border: 2px solid ${borderColor}; border-radius: 14px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
