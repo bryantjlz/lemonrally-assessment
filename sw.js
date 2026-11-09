@@ -1,10 +1,9 @@
-const CACHE_NAME = 'lemon-rally-assessment-v2';
-// Do NOT cache config.json — always fetch fresh so question edits take effect immediately
+const CACHE_NAME = 'lemon-rally-assessment-v3';
+// Do NOT cache config.json or app.js — always fetch fresh so changes take effect immediately
 const ASSETS = [
   './',
   './index.html',
   './style.css',
-  './app.js',
   './manifest.json'
 ];
 
@@ -23,8 +22,8 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
-  // Never serve config.json from cache — always fetch live
-  if (url.pathname.endsWith('config.json')) {
+  // Never serve config.json or app.js from cache — always fetch live
+  if (url.pathname.endsWith('config.json') || url.pathname.endsWith('app.js')) {
     e.respondWith(fetch(e.request));
     return;
   }
