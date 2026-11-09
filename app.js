@@ -229,14 +229,14 @@
         <div style="margin-bottom:14px;">
           <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
             <span style="font-size:14px;color:var(--club-dark);">${cat}</span>
-            <span style="font-size:13px;color:#FDCE00;font-weight:700;">${s.toFixed(1)}</span>
+            <span style="font-size:13px;color:#FDCE00;font-weight:700;">${s.toFixed(2)}</span>
           </div>
           <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:${pct}%"></div></div>
         </div>`;
     }).join('');
 
     const r = config.results || {};
-    const findPlayersText = (r.findPlayers || 'FIND CLUB MEMBERS AT YOUR <span>{score} LEVEL</span>').replace('{score}', sc.toFixed(1));
+    const findPlayersText = (r.findPlayers || 'FIND CLUB MEMBERS AT YOUR <span>{score} LEVEL</span>').replace('{score}', sc.toFixed(2));
 
     // Build session recommendations HTML
     let sessionsHTML = '';
@@ -303,7 +303,7 @@
     return `
       <div style="text-align:center;margin-bottom:24px;">
         <p style="color:var(--club-dark);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;">Your Skill Rating</p>
-        <div class="mc-score-circle"><span class="mc-score-num">${sc.toFixed(1)}</span></div>
+        <div class="mc-score-circle"><span class="mc-score-num">${sc.toFixed(2)}</span></div>
         <div class="mc-title" style="font-size:32px;color:var(--club-dark);margin-bottom:10px;">${b.label}</div>
         <p style="color:var(--club-dark);font-size:15px;line-height:1.6;">${b.desc}</p>
       </div>
