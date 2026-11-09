@@ -209,10 +209,14 @@
     const st = config.styles[answers.sty || 3];
     const ca = config.clubActivities || {};
 
-    // Find recommended session based on score
+    // Find ALL matching sessions (for overlap handling)
+    const matchingSessions = ca.sessions ? ca.sessions.filter(s => sc >= s.minScore && sc <= s.maxScore) : [];
     let recommendedSession = null;
-    if (ca.sessions) {
-      recommendedSession = ca.sessions.find(s => sc >= s.minScore && sc <= s.maxScore);
+    let showBoth = false;
+    if (matchingSessions.length > 0) {
+      // Recommend the higher session (LEMON STEP UP) when in overlap range
+      recommendedSession = matchingSessions[matchingSessions.length - 1];
+      showBoth = matchingSessions.length > 1;
     }
 
     const cats = config.categories.map(cat => {
@@ -243,8 +247,14 @@
           <div class="mc-title" style="font-size:18px;color:var(--club-dark);margin-bottom:16px;">Recommended Club Sessions</div>
           ${ca.sessions.map(s => {
             const isRecommended = recommendedSession && s.name === recommendedSession.name;
+            const isMatching = matchingSessions.includes(s);
+            const highlight = showBoth && isMatching ? 'rgba(253, 207, 0, 0.25)' : (isRecommended ? 'rgba(253, 207, 0, 0.15)' : 'rgba(0, 15, 67, 0.05)');
+            const borderColor = showBoth && isMatching ? '#FDCE00' : (isRecommended ? '#FDCE00' : 'rgba(0, 15, 67, 0.2)');
+            const badge = showBoth && isMatching && !isRecommended
+              ? '<div style="font-size:11px;font-weight:700;color:#FDCE00;text-transform:uppercase;letter-spacing:0.08em;margin-top:8px;">Also suitable for your level</div>'
+              : (isRecommended ? '<div style="font-size:12px;font-weight:700;color:#FDCE00;margin-top:10px;">⭐ Recommended for your level!</div>' : '');
             return `
-              <div style="margin-bottom:14px; padding:16px; background: ${isRecommended ? 'rgba(253, 207, 0, 0.15)' : 'rgba(0, 15, 67, 0.05)'}; border: 2px solid ${isRecommended ? '#FDCE00' : 'rgba(0, 15, 67, 0.2)'}; border-radius: 14px;">
+              <div style="margin-bottom:14px; padding:16px; background:${highlight}; border: 2px solid ${borderColor}; border-radius: 14px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                   <div style="font-size:20px; margin-right:8px;">${s.emoji}</div>
                   <div style="flex:1;">
@@ -257,7 +267,7 @@
                 <ul style="margin:0;padding-left:18px;font-size:13px;color:var(--club-dark);line-height:1.6;">
                   ${s.details.map(d => `<li style="margin-bottom:4px;">• ${d}</li>`).join('')}
                 </ul>
-                ${isRecommended ? '<div style="margin-top:10px;font-size:12px;font-weight:700;color:#FDCE00;">⭐ Recommended for your level!</div>' : ''}
+                ${badge}
               </div>`;
           }).join('')}
         </div>`;
