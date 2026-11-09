@@ -177,16 +177,22 @@
     ).join('');
 
     const isLast = step === config.questions.length;
+
+    // Build navigation: BACK (except Q1), and on Q10 a "SEE MY RATING" button (no auto-advance)
+    let navHTML = '';
+    if (step > 1) {
+      navHTML += `<button class="mc-btn-back" onclick="window.mcBack()">← Back</button>`;
+    }
+    if (isLast) {
+      // On question 10: manual "SEE MY RATING" button (disabled until selection made)
+      navHTML += `<button class="mc-btn-primary" id="mc-next" onclick="window.mcNext()" ${sel === null ? 'disabled' : ''} style="font-size:17px;padding:11px 28px;">SEE MY RATING</button>`;
+    }
+
     return `
       <span class="mc-tag">${q.cat}</span>
       <div class="mc-title" style="font-size:22px;color:#fff;margin:10px 0 22px;line-height:1.2;">${q.q}</div>
       <div>${opts}</div>
-      <div class="mc-nav">
-        <button class="mc-btn-back" onclick="window.mcBack()">← Back</button>
-        <button class="mc-btn-primary" id="mc-next" onclick="window.mcNext()" ${sel === null ? 'disabled' : ''} style="font-size:17px;padding:11px 28px;">
-          ${isLast ? 'SEE MY RATING' : 'NEXT'}
-        </button>
-      </div>`;
+      <div class="mc-nav">${navHTML}</div>`;
   }
 
   // ---------- Results screen ----------
@@ -285,6 +291,12 @@
     if (radio) radio.textContent = '✓';
     const nb = document.getElementById('mc-next');
     if (nb) nb.disabled = false;
+
+    // Auto-advance to next question (except on Q10, which requires manual "SEE MY RATING")
+    if (!config || step >= config.questions.length) return;
+    setTimeout(() => {
+      window.mcNext();
+    }, 600);
   };
 
   window.mcNext = function () {

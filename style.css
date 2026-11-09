@@ -275,13 +275,15 @@ html, body {
 }
 
 #mc-card {
-  background: var(--club-dark);
+  background: var(--club-primary);
   border-radius: 20px;
   padding: 32px 24px;
   box-shadow: var(--shadow);
   min-height: 420px;
+  color: var(--club-dark);
 }
 
+/* General tag badge (used in intro section) */
 .mc-tag {
   display: inline-block;
   padding: 3px 12px;
@@ -290,11 +292,103 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(0, 0, 0, 0.15);
-  color: #FDCE00;
-  border: 1px solid rgba(253, 207, 0, 0.35);
+  background: rgba(0, 15, 67, 0.15);
+  color: var(--club-accent);
+  border: 1px solid rgba(0, 15, 67, 0.35);
   margin-bottom: 10px;
   font-family: var(--font-body);
+}
+
+/* Question text on yellow card */
+#mc-card .mc-title,
+#mc-card .mc-tag,
+#mc-card p,
+#mc-card span,
+#mc-card div {
+  color: var(--club-dark) !important;
+}
+
+/* Override specific white-text elements for yellow background */
+#mc-card .mc-opt {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(0, 15, 67, 0.25);
+  color: var(--club-dark);
+}
+
+#mc-card .mc-opt:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: var(--club-accent);
+  transform: translateX(3px);
+}
+
+#mc-card .mc-opt.sel {
+  background: var(--club-accent);
+  border-color: var(--club-accent);
+  color: #fff;
+}
+
+#mc-card .mc-opt.sel .mc-radio {
+  border-color: #fff;
+  background: var(--club-accent);
+  color: #fff;
+}
+
+#mc-card .mc-radio {
+  border: 2px solid rgba(0, 15, 67, 0.35);
+  color: var(--club-accent);
+}
+
+#mc-card .mc-tag {
+  background: rgba(0, 15, 67, 0.15);
+  color: var(--club-accent);
+  border: 1px solid rgba(0, 15, 67, 0.35);
+}
+
+#mc-card .mc-divider-w {
+  background: rgba(0, 15, 67, 0.2);
+}
+
+#mc-card .mc-bar-bg {
+  background: rgba(0, 15, 67, 0.2);
+}
+
+#mc-card .mc-score-circle,
+#mc-card .mc-style-card,
+#mc-card .mc-cta-box {
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--club-dark);
+}
+
+#mc-card .mc-score-num {
+  color: var(--club-dark);
+}
+
+#mc-card .mc-style-card {
+  border: 1px solid rgba(0, 15, 67, 0.25);
+}
+
+#mc-card .mc-cta-box {
+  border: 1px solid rgba(0, 15, 67, 0.25);
+}
+
+#mc-card .mc-btn-primary {
+  background: var(--club-accent);
+  color: #fff;
+}
+
+#mc-card .mc-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+#mc-card .mc-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Hide the NEXT button entirely — handled via JS auto-advance */
+#mc-next {
+  display: none !important;
 }
 
 .mc-tags-row {
