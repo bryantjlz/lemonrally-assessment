@@ -296,7 +296,7 @@
     if (!config || step >= config.questions.length) return;
     setTimeout(() => {
       window.mcNext();
-    }, 600);
+    }, 900);
   };
 
   window.mcNext = function () {

@@ -386,11 +386,6 @@ html, body {
   cursor: not-allowed;
 }
 
-/* Hide the NEXT button entirely — handled via JS auto-advance */
-#mc-next {
-  display: none !important;
-}
-
 .mc-tags-row {
   display: flex;
   gap: 8px;
