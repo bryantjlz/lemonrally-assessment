@@ -4,12 +4,12 @@
    ========================================== */
 
 :root {
-  /* Club branding */
-  --club-primary: #FFD60A;      /* Lemon yellow */
-  --club-primary-dark: #E6C200;
-  --club-accent: #6ABF4A;       /* Fresh green */
-  --club-dark: #1A1A1A;         /* Near black for text */
-  --club-light: #FFF9E6;        /* Light lemon cream */
+  /* Club branding (extracted from source-logo.png) */
+  --club-primary: #FDCE00;      /* Lemon yellow from logo */
+  --club-primary-dark: #E6BC00; /* Darker lemon for hover states */
+  --club-accent: #000F43;       /* Deep navy from logo */
+  --club-dark: #000F43;         /* Deep navy for card/text */
+  --club-light: #FFF4CC;        /* Light lemon cream */
   --club-mid: #FFF4B3;
 
   /* UI */
@@ -149,7 +149,7 @@ html, body {
 
 #mc-intro .feature {
   background: var(--club-light);
-  border: 1px solid rgba(106, 191, 74, 0.15);
+  border: 1px solid rgba(0, 15, 67, 0.15);
   border-radius: var(--radius);
   padding: 18px;
 }
@@ -218,7 +218,7 @@ html, body {
   padding: 16px 44px;
   border-radius: 10px;
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(106, 191, 74, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 15, 67, 0.3);
   transition: var(--transition);
 }
 
@@ -281,9 +281,9 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.15);
-  color: #B5FFA5;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.15);
+  color: #FDCE00;
+  border: 1px solid rgba(253, 207, 0, 0.35);
   margin-bottom: 10px;
   font-family: var(--font-body);
 }
@@ -317,13 +317,13 @@ html, body {
 }
 
 .mc-opt:hover {
-  background: rgba(106, 191, 74, 0.18);
-  border-color: rgba(106, 191, 74, 0.45);
+  background: rgba(0, 15, 67, 0.18);
+  border-color: rgba(253, 207, 0, 0.45);
   transform: translateX(3px);
 }
 
 .mc-opt.sel {
-  background: rgba(106, 191, 74, 0.25);
+  background: rgba(0, 15, 67, 0.25);
   border-color: var(--club-accent);
 }
 
@@ -345,7 +345,7 @@ html, body {
 
 .mc-opt.sel .mc-radio {
   border-color: var(--club-accent);
-  background: rgba(106, 191, 74, 0.25);
+  background: rgba(0, 15, 67, 0.25);
 }
 
 .mc-nav {

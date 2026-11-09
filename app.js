@@ -114,7 +114,7 @@
     const opts = q.opts.map(o =>
       `<button class="mc-opt ${sel === o.s ? 'sel' : ''}" onclick="window.mcSel(${o.s}, this)">
         <div class="mc-radio">${sel === o.s ? '✓' : ''}</div>
-        <span>${o.l ? `<strong style="color:#FFD60A">${o.l}:</strong> ` : ''}${o.t}</span>
+        <span>${o.l ? `<strong style="color:#FDCE00">${o.l}:</strong> ` : ''}${o.t}</span>
       </button>`
     ).join('');
 
@@ -146,7 +146,7 @@
         <div style="margin-bottom:14px;">
           <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
             <span style="font-size:14px;color:#fff;">${cat}</span>
-            <span style="font-size:13px;color:#FFD60A;font-weight:700;">${s.toFixed(1)}</span>
+            <span style="font-size:13px;color:#FDCE00;font-weight:700;">${s.toFixed(1)}</span>
           </div>
           <div class="mc-bar-bg"><div class="mc-bar-fill" style="width:${pct}%"></div></div>
         </div>`;
@@ -173,7 +173,7 @@
         <div class="mc-style-card">
           <span style="font-size:30px;">${st.emoji}</span>
           <div>
-            <div class="mc-title" style="font-size:20px;color:#FFD60A;margin-bottom:6px;">${st.label}</div>
+            <div class="mc-title" style="font-size:20px;color:#FDCE00;margin-bottom:6px;">${st.label}</div>
             <p style="color:rgba(255,255,255,0.85);font-size:14px;line-height:1.5;margin:0;">${st.desc}</p>
           </div>
         </div>

@@ -2,10 +2,10 @@
   "club": {
     "name": "Lemon Rally Club",
     "tagline": "Pickleball skill assessment for our club members",
-    "primaryColor": "#FFD60A",
-    "accentColor": "#6ABF4A",
-    "darkColor": "#1A1A1A",
-    "lightColor": "#FFF9E6"
+    "primaryColor": "#FDCE00",
+    "accentColor": "#000F43",
+    "darkColor": "#000F43",
+    "lightColor": "#FFF4CC"
   },
   "intro": {
     "eyebrow": "Lemon Rally Club Skill Assessment",
